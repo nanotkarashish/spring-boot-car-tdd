@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: car-app
-  namespace: devel
+  namespace: ${ENVIRONMENT}
   labels:
     app: car-app
 spec:
@@ -37,7 +37,7 @@ metadata:
   labels:
     app: car-app
   name: car-app
-  namespace: devel
+  namespace: ${ENVIRONMENT}
 spec:
   ports:
   - name: web
@@ -52,12 +52,12 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: car-app
-  namespace: devel
+  namespace: ${ENVIRONMENT}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: car-app.devel.local
+  - host: car-app.${ENVIRONMENT}.local
     http:
       paths:
       - path: /
