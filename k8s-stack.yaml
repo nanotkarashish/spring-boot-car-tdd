@@ -1,25 +1,33 @@
 ---
-
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  labels:
-    app: car-app
   name: car-app
   namespace: devel
+  labels:
+    app: car-app
 spec:
-  containers:
-  - name: car-app
-    image: nanotkarashish/car_app:latest
-    ports:
-      - containerPort: 8080
-  - name: mysql
-    image: mysql:5.7
-    env:
-    - name: MYSQL_ROOT_PASSWORD
-      value: "password"
-    ports:
-      - containerPort: 3306
+  replicas: 1
+  selector:
+    matchLabels:
+      app: car-app
+  template:
+    metadata:
+      labels:
+        app: car-app
+    spec:
+      containers:
+      - name: car-app
+        image: nanotkarashish/car_app:latest
+        ports:
+        - containerPort: 8080
+      - name: mysql
+        image: mysql:5.7
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "password"
+        ports:
+        - containerPort: 3306
 
 ---
 
